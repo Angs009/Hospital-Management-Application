@@ -68,7 +68,7 @@ Production-ready deployment guide for the Hospital Management System on AWS EKS.
 
 ```bash
 # Build the Docker image locally
-docker build -t nanineelapu/hospital-app:1.0.0 .
+docker build -t angira/hospital-app:1.0.0 .
 
 # Verify the image
 docker images | grep hospital-app
@@ -92,7 +92,7 @@ docker run -d \
   -e NODE_ENV=production \
   -e MONGO_URI=mongodb://mongodb:27017/hospital_management \
   --link mongodb \
-  nanineelapu/hospital-app:1.0.0
+  angira/hospital-app:1.0.0
 
 # Test application
 curl http://localhost:5000/healthz
@@ -110,13 +110,13 @@ docker rm hospital-app mongodb
 docker login
 
 # Push image to Docker Hub
-docker push nanineelapu/hospital-app:1.0.0
+docker push angira/hospital-app:1.0.0
 
 # Verify on Docker Hub
-# Visit: https://hub.docker.com/r/nanineelapu/hospital-app
+# Visit: https://hub.docker.com/r/angira/hospital-app
 
 # Pull the image to verify it's accessible
-docker pull nanineelapu/hospital-app:1.0.0
+docker pull angira/hospital-app:1.0.0
 ```
 
 ### Image Versioning Strategy
@@ -125,16 +125,17 @@ Each release should use immutable version tags:
 
 ```bash
 # Production releases use version tags
-docker tag nanineelapu/hospital-app:1.0.0 nanineelapu/hospital-app:v1.0.0
-docker push nanineelapu/hospital-app:v1.0.0
+
+docker tag angira/hospital-app:1.0.0 angira/hospital-app:v1.0.0
+docker push angira/hospital-app:v1.0.0
 
 # Update for v1.1.0
-docker build -t nanineelapu/hospital-app:1.1.0 .
-docker push nanineelapu/hospital-app:1.1.0
+docker build -t angira/hospital-app:1.1.0 .
+docker push angira/hospital-app:1.1.0
 
 # Update in Helm values or deployment manifests
 # sed -i 's/1.0.0/1.1.0/g' hospital-chart/values.yaml
-# kubectl set image deployment/hospital-web hospital-web=nanineelapu/hospital-app:1.1.0
+# kubectl set image deployment/hospital-web hospital-web=angira/hospital-app:1.1.0
 ```
 
 ## Kubernetes Deployment
@@ -519,10 +520,10 @@ For issues or contributions, please refer to the project's GitHub repository.
 
 ## Build Docker Image
 
-Replace `nanineelapu` with your Docker Hub username when required.
+Replace `angira` with your Docker Hub username when required.
 
 ```bash
-docker build -t nanineelapu/hospital-app:1.0.0 .
+docker build -t angira/hospital-app:1.0.0 .
 docker run --rm -p 5000:5000 \
   -e NODE_ENV=production \
   -e PORT=5000 \
@@ -531,14 +532,14 @@ docker run --rm -p 5000:5000 \
   -e JWT_SECRET=local-jwt-secret \
   -e ADMIN_USERNAME=admin \
   -e ADMIN_PASSWORD=admin123 \
-  nanineelapu/hospital-app:1.0.0
+  angira/hospital-app:1.0.0
 ```
 
 ## Push Docker Image
 
 ```bash
 docker login
-docker push nanineelapu/hospital-app:1.0.0
+docker push angira/hospital-app:1.0.0
 ```
 
 ## Deploy with Kubernetes Manifests
@@ -566,7 +567,7 @@ helm lint hospital-chart
 helm upgrade --install hospital-app ./hospital-chart \
   --namespace hospital \
   --create-namespace \
-  --set image.repository=docker.io/nanineelapu/hospital-app \
+  --set image.repository=docker.io/angira/hospital-app \
   --set image.tag=1.0.0 \
   --set secret.stringData.SESSION_SECRET="$(openssl rand -hex 32)" \
   --set secret.stringData.JWT_SECRET="$(openssl rand -hex 32)" \
@@ -590,8 +591,8 @@ curl http://<load-balancer-dns>/readyz
 ## Upgrade Image Version
 
 ```bash
-docker build -t nanineelapu/hospital-app:1.0.1 .
-docker push nanineelapu/hospital-app:1.0.1
+docker build -t angira/hospital-app:1.0.1 .
+docker push angira/hospital-app:1.0.1
 helm upgrade hospital-app ./hospital-chart -n hospital --set image.tag=1.0.1
 kubectl rollout status deployment/hospital-app-web -n hospital
 ```

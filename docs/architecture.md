@@ -124,7 +124,7 @@ Backend: hospital-web Pods
 ```yaml
 Name: hospital-web
 Replicas: 2 (configurable)
-Image: docker.io/nanineelapu/hospital-app:1.0.0
+Image: docker.io/angira/hospital-app:1.0.0
 Port: 5000/TCP
 ```
 
@@ -554,8 +554,8 @@ kubectl logs -f deployment/hospital-web -n hospital
 
 ```bash
 kubectl set image deployment/hospital-web \
-  hospital-web=nanineelapu/hospital-app:1.1.0 \
-  -n hospital
+   hospital-web=angira/hospital-app:1.1.0 \
+   -n hospital
 ```
 
 ### Scale Deployment

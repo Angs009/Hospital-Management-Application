@@ -60,9 +60,9 @@ The hospital team can run a reliable, scalable web application for patient regis
 - [ ] Dependencies installed from package-lock.json (no npm install)
 - [ ] Container runs as non-root user (node:node, UID 1000)
 - [ ] Build context properly excludes local deps, secrets, and documentation
-- [ ] Image is tagged as `nanineelapu/hospital-app:1.0.0`
+- [ ] Image is tagged as `angira/hospital-app:1.0.0`
 - [ ] Image is pushed to Docker Hub and publicly accessible
-- [ ] Image can be pulled and started: `docker pull nanineelapu/hospital-app:1.0.0`
+- [ ] Image can be pulled and started: `docker pull angira/hospital-app:1.0.0`
 - [ ] .dockerignore file excludes unnecessary files
 
 ### Kubernetes Manifests

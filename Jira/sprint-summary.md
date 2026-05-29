@@ -71,7 +71,7 @@ Health Endpoints: /healthz (liveness), /readyz (readiness)
 - **Status:** COMPLETED
 - **Story Points:** 5
 - **Completed Tasks:**
-  - [x] Image tagged as `nanineelapu/hospital-app:1.0.0`
+   - [x] Image tagged as `angira/hospital-app:1.0.0`
   - [x] Docker Hub authentication configured
   - [x] Image successfully pushed to Docker Hub
   - [x] Image verified as public and pullable
@@ -81,11 +81,11 @@ Health Endpoints: /healthz (liveness), /readyz (readiness)
 
 **Published Image:**
 ```
-Registry: Docker Hub (nanineelapu)
+Registry: Docker Hub (angira)
 Repository: hospital-app
 Tags: 1.0.0, v1.0.0
 Status: Public, accessible globally
-Verified: ✅ docker pull nanineelapu/hospital-app:1.0.0
+Verified: ✅ docker pull angira/hospital-app:1.0.0
 ```
 
 ### Deliverables
@@ -156,7 +156,7 @@ Create production-ready Kubernetes manifests for the Hospital Application and Mo
 3. **Hospital Web Deployment** ✅
    - Replicas: 2
    - Strategy: RollingUpdate (maxUnavailable: 0, maxSurge: 1)
-   - Image: nanineelapu/hospital-app:1.0.0
+   - Image: angira/hospital-app:1.0.0
    - Port: 5000/TCP
    - Readiness Probe: /readyz (15s → 10s → 6 failures)
    - Liveness Probe: /healthz (30s → 20s → 3 failures)

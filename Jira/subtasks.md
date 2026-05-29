@@ -153,9 +153,9 @@ Create a multi-stage, production-ready Dockerfile with security best practices.
 
 **Key Commands:**
 ```bash
-docker build -t nanineelapu/hospital-app:1.0.0 .
-docker history nanineelapu/hospital-app:1.0.0  # Check layer sizes
-docker inspect nanineelapu/hospital-app:1.0.0  # Verify user and cmd
+docker build -t angira/hospital-app:1.0.0 .
+docker history angira/hospital-app:1.0.0  # Check layer sizes
+docker inspect angira/hospital-app:1.0.0  # Verify user and cmd
 ```
 
 ### HOSP-ST2.2: Create .dockerignore File
@@ -208,7 +208,7 @@ Run and test the Docker image locally to verify functionality.
 docker run -d --name test-app \
   -p 5000:5000 \
   -e NODE_ENV=production \
-  nanineelapu/hospital-app:1.0.0
+  angira/hospital-app:1.0.0
 
 # Test
 docker exec test-app curl http://localhost:5000/healthz
@@ -231,16 +231,16 @@ docker rm test-app
 Create release tags for Docker image following semantic versioning.
 
 **Acceptance Criteria:**
-- [ ] Image tagged as `nanineelapu/hospital-app:1.0.0` (production release)
-- [ ] Image tagged as `nanineelapu/hospital-app:v1.0.0` (release version)
-- [ ] Image tagged as `nanineelapu/hospital-app:latest` (optional)
+  - [ ] Image tagged as `angira/hospital-app:1.0.0` (production release)
+  - [ ] Image tagged as `angira/hospital-app:v1.0.0` (release version)
+  - [ ] Image tagged as `angira/hospital-app:latest` (optional)
 - [ ] Tags verified with `docker images` command
 - [ ] Tagging commands documented in README
 
 **Commands:**
 ```bash
-docker tag nanineelapu/hospital-app:1.0.0 nanineelapu/hospital-app:v1.0.0
-docker tag nanineelapu/hospital-app:1.0.0 nanineelapu/hospital-app:latest
+docker tag angira/hospital-app:1.0.0 angira/hospital-app:v1.0.0
+docker tag angira/hospital-app:1.0.0 angira/hospital-app:latest
 ```
 
 ### HOSP-ST3.2: Authenticate and Push to Docker Hub
@@ -255,10 +255,10 @@ Login to Docker Hub and push image with all tags.
 **Acceptance Criteria:**
 - [ ] Docker Hub account exists and is accessible
 - [ ] Local docker login successful: `docker login`
-- [ ] Image pushed with primary tag: `docker push nanineelapu/hospital-app:1.0.0`
-- [ ] Image pushed with version tag: `docker push nanineelapu/hospital-app:v1.0.0`
+- [ ] Image pushed with primary tag: `docker push angira/hospital-app:1.0.0`
+- [ ] Image pushed with version tag: `docker push angira/hospital-app:v1.0.0`
 - [ ] Image available on Docker Hub (verify via web UI)
-- [ ] Image can be pulled by others: `docker pull nanineelapu/hospital-app:1.0.0`
+- [ ] Image can be pulled by others: `docker pull angira/hospital-app:1.0.0`
 - [ ] Push commands documented in README
 
 ### HOSP-ST3.3: Document Image Versioning Strategy
@@ -371,7 +371,7 @@ Create Deployment manifest for hospital-web application.
 - [ ] Strategy: RollingUpdate
   - [ ] maxUnavailable: 0
   - [ ] maxSurge: 1
-- [ ] Image: nanineelapu/hospital-app:1.0.0
+- [ ] Image: angira/hospital-app:1.0.0
 - [ ] Port: 5000/TCP
 - [ ] ConfigMap env injection:
   - [ ] configMapRef: hospital-config

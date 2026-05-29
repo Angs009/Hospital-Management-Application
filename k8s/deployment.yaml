@@ -33,7 +33,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: hospital-web
-          image: docker.io/nanineelapu/hospital-app:1.0.0
+          image: docker.io/angira/hospital-app:1.0.0
           imagePullPolicy: IfNotPresent
           ports:
             - name: http

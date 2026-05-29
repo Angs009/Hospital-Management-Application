@@ -155,7 +155,7 @@ As a release engineer, I need the Docker image pushed to Docker Hub with immutab
 ### Description
 
 Build upon the production Dockerfile to:
-- Tag the image with semantic version: `nanineelapu/hospital-app:1.0.0`
+- Tag the image with semantic version: `angira/hospital-app:1.0.0`
 - Push to Docker Hub public registry
 - Verify image accessibility and pull-ability
 - Document versioning strategy for future releases
@@ -166,12 +166,12 @@ The image must be publicly available and ready for EKS to pull on deployment.
 ### Acceptance Criteria
 
 - [ ] Docker image built locally with version tag
-- [ ] Image tagged: `nanineelapu/hospital-app:1.0.0`
+- [ ] Image tagged: `angira/hospital-app:1.0.0`
 - [ ] Docker Hub account accessible
 - [ ] Local docker login successful
 - [ ] Image pushed to Docker Hub successfully
 - [ ] Image visible on Docker Hub web interface
-- [ ] Image can be pulled by others: `docker pull nanineelapu/hospital-app:1.0.0`
+- [ ] Image can be pulled by others: `docker pull angira/hospital-app:1.0.0`
 - [ ] Image metadata and description added to Docker Hub
 - [ ] Versioning strategy documented
 - [ ] Immutable tagging strategy explained
@@ -179,8 +179,8 @@ The image must be publicly available and ready for EKS to pull on deployment.
 ### Technical Acceptance Criteria
 
 - [ ] Semantic versioning used: MAJOR.MINOR.PATCH (1.0.0)
-- [ ] Release tag created: `nanineelapu/hospital-app:v1.0.0`
-- [ ] Optional latest tag: `nanineelapu/hospital-app:latest` (use with caution)
+- [ ] Release tag created: `angira/hospital-app:v1.0.0`
+- [ ] Optional latest tag: `angira/hospital-app:latest` (use with caution)
 - [ ] Push commands documented in README
 - [ ] Docker Hub repository URL documented
 - [ ] Image digest recorded for verification
@@ -250,7 +250,7 @@ All manifests must include proper labels, selectors, probes, resources, and secu
 - [ ] Deployment name: hospital-web
 - [ ] 2 replicas (configurable)
 - [ ] RollingUpdate strategy (maxUnavailable: 0, maxSurge: 1)
-- [ ] Image: nanineelapu/hospital-app:1.0.0
+- [ ] Image: angira/hospital-app:1.0.0
 - [ ] Port: 5000/TCP
 - [ ] ConfigMap env injection
 - [ ] Secret env injection
