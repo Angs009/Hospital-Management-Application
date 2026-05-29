@@ -1,0 +1,149 @@
+nameOverride: ""
+fullnameOverride: ""
+
+replicaCount: 2
+revisionHistoryLimit: 5
+
+image:
+  repository: docker.io/nanineelapu/hospital-app
+  tag: "1.0.0"
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+
+container:
+  name: hospital-web
+  port: 5000
+  portName: http
+
+service:
+  name: hospital-web
+  type: LoadBalancer
+  port: 80
+  targetPortName: http
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+
+env:
+  NODE_ENV: production
+  PORT: "5000"
+  MONGO_URI: mongodb://hospital-app-mongodb:27017/hospital_management
+
+secret:
+  create: true
+  name: ""
+  stringData:
+    SESSION_SECRET: CHANGE_ME_generate_with_openssl_rand_hex_32
+    JWT_SECRET: CHANGE_ME_generate_with_openssl_rand_hex_32
+    ADMIN_USERNAME: admin
+    ADMIN_PASSWORD: CHANGE_ME_use_a_strong_admin_password
+    EMAIL_USER: ""
+    EMAIL_PASS: ""
+
+probes:
+  readiness:
+    path: /readyz
+    initialDelaySeconds: 15
+    periodSeconds: 10
+    timeoutSeconds: 3
+    failureThreshold: 6
+  liveness:
+    path: /healthz
+    initialDelaySeconds: 30
+    periodSeconds: 20
+    timeoutSeconds: 3
+    failureThreshold: 3
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+podSecurityContext:
+  seccompProfile:
+    type: RuntimeDefault
+
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 1000
+  capabilities:
+    drop:
+      - ALL
+
+tmpVolume:
+  enabled: true
+  mountPath: /tmp
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+storageClass:
+  create: true
+  name: ebs-gp3
+  provisioner: ebs.csi.aws.com
+  volumeBindingMode: WaitForFirstConsumer
+  reclaimPolicy: Retain
+  allowVolumeExpansion: true
+  parameters:
+    type: gp3
+    fsType: ext4
+
+mongodb:
+  enabled: true
+  name: mongodb
+  replicaCount: 1
+  revisionHistoryLimit: 3
+  strategyType: Recreate
+  image:
+    repository: docker.io/library/mongo
+    tag: "7-jammy"
+    pullPolicy: IfNotPresent
+  service:
+    port: 27017
+    portName: mongodb
+    type: ClusterIP
+  persistence:
+    enabled: true
+    existingClaim: ""
+    claimName: mongodb-data
+    accessModes:
+      - ReadWriteOnce
+    size: 10Gi
+  podSecurityContext:
+    fsGroup: 999
+    seccompProfile:
+      type: RuntimeDefault
+  securityContext:
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: false
+    runAsNonRoot: true
+    runAsUser: 999
+    runAsGroup: 999
+    capabilities:
+      drop:
+        - ALL
+  probes:
+    readiness:
+      initialDelaySeconds: 10
+      periodSeconds: 10
+      timeoutSeconds: 3
+      failureThreshold: 6
+    liveness:
+      initialDelaySeconds: 30
+      periodSeconds: 20
+      timeoutSeconds: 3
+      failureThreshold: 3
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: "1"
+      memory: 1Gi

@@ -1,0 +1,34 @@
+{{- if .Values.storageClass.create }}
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: {{ .Values.storageClass.name }}
+  labels:
+    {{- include "hospital-app.labels" . | nindent 4 }}
+    app.kubernetes.io/component: storage
+provisioner: {{ .Values.storageClass.provisioner }}
+volumeBindingMode: {{ .Values.storageClass.volumeBindingMode }}
+reclaimPolicy: {{ .Values.storageClass.reclaimPolicy }}
+allowVolumeExpansion: {{ .Values.storageClass.allowVolumeExpansion }}
+parameters:
+  {{- range $key, $value := .Values.storageClass.parameters }}
+  {{ $key }}: {{ $value | quote }}
+  {{- end }}
+{{- end }}
+{{- if and .Values.mongodb.enabled .Values.mongodb.persistence.enabled (not .Values.mongodb.persistence.existingClaim) }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "hospital-app.mongodbClaimName" . }}
+  labels:
+    {{- include "hospital-app.labels" . | nindent 4 }}
+    app.kubernetes.io/component: mongodb
+spec:
+  accessModes:
+    {{- toYaml .Values.mongodb.persistence.accessModes | nindent 4 }}
+  storageClassName: {{ .Values.storageClass.name }}
+  resources:
+    requests:
+      storage: {{ .Values.mongodb.persistence.size }}
+{{- end }}

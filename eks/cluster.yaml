@@ -1,0 +1,25 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+metadata:
+  name: hospital-eks
+  region: ap-southeast-2
+  version: "1.30"
+availabilityZones:
+  - ap-southeast-2a
+  - ap-southeast-2b
+iam:
+  withOIDC: true
+managedNodeGroups:
+  - name: ng-workers
+    instanceType: t3.small
+    desiredCapacity: 1
+    minSize: 1
+    maxSize: 2
+    volumeSize: 20
+    iam:
+      withAddonPolicies:
+        ebs: true
+addons:
+  - name: aws-ebs-csi-driver
+    wellKnownPolicies:
+      ebsCSIController: true

@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.service.name }}
+  labels:
+    {{- include "hospital-app.labels" . | nindent 4 }}
+    app.kubernetes.io/component: web
+  {{- with .Values.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    {{- include "hospital-app.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: web
+  ports:
+    - name: {{ .Values.container.portName }}
+      port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPortName }}
+      protocol: TCP
+{{- if .Values.mongodb.enabled }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "hospital-app.mongodbName" . }}
+  labels:
+    {{- include "hospital-app.labels" . | nindent 4 }}
+    app.kubernetes.io/component: mongodb
+spec:
+  type: {{ .Values.mongodb.service.type }}
+  selector:
+    {{- include "hospital-app.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: mongodb
+  ports:
+    - name: {{ .Values.mongodb.service.portName }}
+      port: {{ .Values.mongodb.service.port }}
+      targetPort: {{ .Values.mongodb.service.portName }}
+      protocol: TCP
+{{- end }}
